@@ -20,7 +20,7 @@
       "function": {
         "imsfunction": {
           "deploymentBucketName": "amplify-imsapi-dev-104451-deployment",
-          "s3Key": "amplify-builds/imsfunction-71536270734b6a54444b-build.zip"
+          "s3Key": "amplify-builds/imsfunction-58436c707a4f3042354e-build.zip"
         }
       }
     }

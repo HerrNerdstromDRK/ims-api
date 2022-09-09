@@ -253,6 +253,8 @@ app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
       });
     } else {
       res.json({
+        removeItemParams: removeItemParams,
+        fullPath: path + "/object" + hashKeyPath + sortKeyPath,
         url: req.url,
         data: data,
       });

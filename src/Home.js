@@ -283,7 +283,11 @@ export default function Home() {
     //    console.log("deleteInventoryItem> id: " + inventoryItemToDelete.id);
 
     // Remove the inventory item from the database back
-    await API.del(apiName, apiDirectory, { body: params })
+    await API.del(
+      apiName,
+      apiDirectory + "/object/" + inventoryItemToDelete.id,
+      { body: params }
+    )
       //    await API.del(apiName, "/items/object/id/", {    body: params,    }) // returns empty result, but no error
       //    await API.del(apiName, "/items/object/" + inventoryItemToDelete.id, {      body: params,    })
       //   await API.del(apiName, "/items/" + inventoryItemToDelete.id, {})
