@@ -198,6 +198,7 @@ app.post(path, function (req, res) {
  ***************************************/
 
 app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
+  /*
   const params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] =
@@ -229,15 +230,35 @@ app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
   let removeItemParams = {
     TableName: tableName,
     Key: params,
+  };*/
+  if (userIdPresent) {
+    req.body["userId"] =
+      req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
+  }
+
+  let removeItemParams = {
+    id: req.body.id,
+    name: "",
+    description: "",
   };
+  app.post(path, { body: removeItemParams });
+  /*
   dynamodb.delete(removeItemParams, (err, data) => {
     if (err) {
       res.statusCode = 500;
-      res.json({ error: err, url: req.url });
+      res.json({
+        removeItemParams: removeItemParams,
+        fullPath: path + "/object" + hashKeyPath + sortKeyPath,
+        error: err,
+        url: req.url,
+      });
     } else {
-      res.json({ url: req.url, data: data });
+      res.json({
+        url: req.url,
+        data: data,
+      });
     }
-  });
+  });*/
 });
 
 app.listen(3000, function () {

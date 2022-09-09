@@ -276,9 +276,9 @@ export default function Home() {
 
     const params = {
       id: inventoryItemToDelete.id,
-      name: inventoryItemToDelete.name,
-      description: inventoryItemToDelete.description,
-      quantity: inventoryItemToDelete.quantity,
+      //     name: inventoryItemToDelete.name,
+      //   description: inventoryItemToDelete.description,
+      // quantity: inventoryItemToDelete.quantity,
     };
     //    console.log("deleteInventoryItem> id: " + inventoryItemToDelete.id);
 
@@ -292,7 +292,7 @@ export default function Home() {
         console.log("deleteInventoryItem> result: " + JSON.stringify(result));
       })
       .catch((err) => {
-        console.log("deleteInventoryItem> error: " + err);
+        console.log("deleteInventoryItem> error: " + JSON.stringify(err));
       });
 
     // Refresh the local inventory items array and update the GUI
