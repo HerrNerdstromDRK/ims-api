@@ -1,13 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import Amplify from "aws-amplify";
+import config from "./aws-exports";
+import { Authenticator } from "@aws-amplify/ui-react";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import AppNavigation from "./AppNavigation";
+
+Amplify.configure(config);
+
+/**
+ * Render the site
+ * Wrap it in the Authenticator to enable authentication
+ * Use the AppNavigation component to navigate between the
+ * authentication page and blog home page.
+ */
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Authenticator.Provider>
+      <AppNavigation />
+    </Authenticator.Provider>
   </React.StrictMode>
 );
 

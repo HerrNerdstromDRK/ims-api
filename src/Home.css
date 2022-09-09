@@ -1,0 +1,49 @@
+.Home {
+    text-align: center;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "blogposts blogview"
+      "blogposts createblog";
+    grid-template-columns: 1fr 3fr;
+    gap: 10px;
+  }
+  
+  .container-flex-content-and-create {
+    display: flex; /* or inline-flex */
+    flex-flow: row wrap;
+    min-width: 100%;
+  
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-around;
+  }
+  
+  .container-flex-content-and-create-child {
+    margin: auto; /* Magic! */
+    min-width: 100%;
+    border: 10px solid blue;
+  }
+  
+  header {
+    grid-area: header;
+  }
+  
+  blogposts {
+    grid-area: blogposts;
+  }
+  
+  blogview {
+    grid-area: blogview;
+  }
+  
+  createblog {
+    grid-area: createblog;
+  }
+  
+  .amplify-card {
+    border: 10px solid blue;
+  }
+  

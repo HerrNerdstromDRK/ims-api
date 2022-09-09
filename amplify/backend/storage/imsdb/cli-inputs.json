@@ -1,0 +1,10 @@
+{
+  "resourceName": "imsdb",
+  "tableName": "imsdb",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
