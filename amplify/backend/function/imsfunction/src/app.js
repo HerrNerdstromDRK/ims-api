@@ -15,7 +15,7 @@ const express = require("express");
 AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const dynamodb_partiql = new AWS.DynamoDB();
+//const dynamodb_partiql = new AWS.DynamoDB();
 
 let tableName = "imsdb";
 if (process.env.ENV && process.env.ENV !== "NONE") {
@@ -199,9 +199,9 @@ app.post(path, function (req, res) {
  * HTTP remove method to delete object *
  ***************************************/
 
-//app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
-app.delete("/items/:id", function (request, response) {
-  /*const params = {};
+app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
+  //app.delete("/items/:id", function (request, response) {
+  const params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] =
       req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
@@ -227,8 +227,8 @@ app.delete("/items/:id", function (request, response) {
       res.statusCode = 500;
       res.json({ error: "Wrong column type " + err });
     }
-  }*/
-
+  }
+  /*
   let deleteParams = {
     TableName: tableName,
     Key: {
@@ -251,7 +251,7 @@ app.delete("/items/:id", function (request, response) {
     }
   });
 
-  /*
+  
   const statement =
     `DELETE FROM \"imsdb-dev\" WHERE \"id\" = \'` +
     params[partitionKeyName] +
@@ -260,7 +260,7 @@ app.delete("/items/:id", function (request, response) {
     .executeStatement({ Statement: statement })
     .promise();
   res.results = results;
-  
+  */
   let removeItemParams = {
     TableName: tableName,
     Key: params,
@@ -282,7 +282,7 @@ app.delete("/items/:id", function (request, response) {
         data: data,
       });
     }
-  });*/
+  });
 });
 
 app.listen(3000, function () {

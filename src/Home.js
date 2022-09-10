@@ -280,14 +280,20 @@ export default function Home() {
     const deleteParams = {
       id: inventoryItemToDelete.id,
     };
-    await API.del(apiName, apiDirectory, { body: deleteParams });
-
+    await API.del(apiName, apiDirectory, { body: deleteParams })
+      .then((result) => {
+        console.log("deleteInventoryItem> result: " + JSON.stringify(result));
+      })
+      .catch((err) => {
+        console.log("deleteInventoryItem> error: " + JSON.stringify(err));
+      });
+    /*
     const params = {
       id: inventoryItemToDelete.id,
       name: "",
       description: "",
     };
-    /*
+    
     const params = {
       id: inventoryItemToDelete.id,
       name: "",
