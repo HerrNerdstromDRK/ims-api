@@ -121,12 +121,16 @@ export default function Home() {
     //    console.log("fetchInventoryItems");
 
     const inventoryItemsFromAPI = await API.get(apiName, apiDirectory + "/id");
+
+    setInventoryItems(
+      inventoryItemsFromAPI.filter(
+        (item) => item.name !== "" && item.description !== ""
+      )
+    );
     console.log(
       "fetchInventoryItems> JSON.stringify( apiData ):  " +
         JSON.stringify(inventoryItemsFromAPI)
     );
-
-    setInventoryItems(inventoryItemsFromAPI);
   }
 
   /**
@@ -257,10 +261,10 @@ export default function Home() {
    * Delete the inventory item represented by the given id
    */
   async function deleteInventoryItem(inventoryItemToDelete) {
-    console.log(
-      "deleteInventoryItem> inventoryItemToDelete: " +
-        JSON.stringify(inventoryItemToDelete)
-    );
+    //    console.log(
+    //    "deleteInventoryItem> inventoryItemToDelete: " +
+    //    JSON.stringify(inventoryItemToDelete)
+    //);
     if (
       !isAuthenticated() ||
       user.getUsername() !== inventoryItemToDelete.createdBy
@@ -276,27 +280,21 @@ export default function Home() {
 
     const params = {
       id: inventoryItemToDelete.id,
-      //     name: inventoryItemToDelete.name,
-      //   description: inventoryItemToDelete.description,
-      // quantity: inventoryItemToDelete.quantity,
+      name: "",
+      description: "",
     };
-    //    console.log("deleteInventoryItem> id: " + inventoryItemToDelete.id);
 
     // Remove the inventory item from the database back
-    await API.del(
+    await API.post(
       apiName,
-      apiDirectory + "/object/" + inventoryItemToDelete.id,
+      apiDirectory, //+ "/object/" + inventoryItemToDelete.id,
       { body: params }
     )
-      //    await API.del(apiName, "/items/object/id/", {    body: params,    }) // returns empty result, but no error
-      //    await API.del(apiName, "/items/object/" + inventoryItemToDelete.id, {      body: params,    })
-      //   await API.del(apiName, "/items/" + inventoryItemToDelete.id, {})
-      //await API.del(apiName, "/items/:" + inventoryItemToDelete.id, {})
       .then((result) => {
-        console.log("deleteInventoryItem> result: " + JSON.stringify(result));
+        // console.log("deleteInventoryItem> result: " + JSON.stringify(result));
       })
       .catch((err) => {
-        console.log("deleteInventoryItem> error: " + JSON.stringify(err));
+        //  console.log("deleteInventoryItem> error: " + JSON.stringify(err));
       });
 
     // Refresh the local inventory items array and update the GUI
@@ -407,7 +405,7 @@ export default function Home() {
         </Button>
       );
     } else {
-      console.log("deleteInventoryItemButton> Not logged in or wrong owner");
+      //      console.log("deleteInventoryItemButton> Not logged in or wrong owner");
       return "";
     }
   }

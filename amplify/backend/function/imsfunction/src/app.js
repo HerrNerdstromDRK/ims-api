@@ -14,6 +14,7 @@ const express = require("express");
 AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
+const dynamodb_partiql = new AWS.DynamoDB();
 
 let tableName = "imsdb";
 if (process.env.ENV && process.env.ENV !== "NONE") {
@@ -226,22 +227,19 @@ app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
     }
   }
 
+  const statement =
+    `DELETE FROM \"imsdb-dev\" WHERE \"id\" = \'` +
+    params[partitionKeyName] +
+    `\'`;
+  const results = dynamodb_partiql
+    .executeStatement({ Statement: statement })
+    .promise();
+  res.results = results;
+  /*
   let removeItemParams = {
     TableName: tableName,
     Key: params,
-  }; /*
-  if (userIdPresent) {
-    req.body["userId"] =
-      req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
-  }
-
-  let removeItemParams = {
-    id: req.body.id,
-    name: "",
-    description: "",
   };
-  app.post(path, { body: removeItemParams });
-  */
   dynamodb.delete(removeItemParams, (err, data) => {
     if (err) {
       res.statusCode = 500;
@@ -259,7 +257,7 @@ app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
         data: data,
       });
     }
-  });
+  });*/
 });
 
 app.listen(3000, function () {
