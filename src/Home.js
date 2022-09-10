@@ -277,7 +277,17 @@ export default function Home() {
       );
       return;
     }
+    const deleteParams = {
+      id: inventoryItemToDelete.id,
+    };
+    await API.del(apiName, apiDirectory, { body: deleteParams });
 
+    const params = {
+      id: inventoryItemToDelete.id,
+      name: "",
+      description: "",
+    };
+    /*
     const params = {
       id: inventoryItemToDelete.id,
       name: "",
@@ -296,7 +306,7 @@ export default function Home() {
       .catch((err) => {
         //  console.log("deleteInventoryItem> error: " + JSON.stringify(err));
       });
-
+*/
     // Refresh the local inventory items array and update the GUI
     fetchInventoryItems();
 

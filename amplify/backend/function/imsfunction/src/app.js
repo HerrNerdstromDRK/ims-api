@@ -9,6 +9,7 @@ See the License for the specific language governing permissions and limitations 
 const AWS = require("aws-sdk");
 const awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 const bodyParser = require("body-parser");
+const { response, request } = require("express");
 const express = require("express");
 
 AWS.config.update({ region: process.env.TABLE_REGION });
@@ -198,8 +199,9 @@ app.post(path, function (req, res) {
  * HTTP remove method to delete object *
  ***************************************/
 
-app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
-  const params = {};
+//app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
+app.delete("/items/:id", function (request, response) {
+  /*const params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] =
       req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
@@ -225,8 +227,31 @@ app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
       res.statusCode = 500;
       res.json({ error: "Wrong column type " + err });
     }
-  }
+  }*/
 
+  let deleteParams = {
+    TableName: tableName,
+    Key: {
+      id: req.body.id,
+    },
+  };
+  dynamodb.delete(deleteParams, (error, result) => {
+    if (error) {
+      response.json({
+        statusCode: 500,
+        error: error.message,
+        url: request.url,
+      });
+    } else {
+      response.json({
+        statusCode: 200,
+        url: request.url,
+        body: JSON.stringify(result),
+      });
+    }
+  });
+
+  /*
   const statement =
     `DELETE FROM \"imsdb-dev\" WHERE \"id\" = \'` +
     params[partitionKeyName] +
@@ -235,7 +260,7 @@ app.delete(path + "/object" + hashKeyPath + sortKeyPath, function (req, res) {
     .executeStatement({ Statement: statement })
     .promise();
   res.results = results;
-  /*
+  
   let removeItemParams = {
     TableName: tableName,
     Key: params,
