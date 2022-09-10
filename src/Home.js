@@ -224,6 +224,8 @@ export default function Home() {
       name: inventoryItemFormData.name,
       description: inventoryItemFormData.description,
       quantity: inventoryItemFormData.quantity,
+      createdBy: oldInventoryItem.createdBy,
+      createdAt: oldInventoryItem.createdAt,
     };
     console.log(
       "updateInventoryItem> Going to post, restData: " +
@@ -277,6 +279,7 @@ export default function Home() {
       );
       return;
     }
+    /*
     const deleteParams = {
       id: inventoryItemToDelete.id,
     };
@@ -287,13 +290,7 @@ export default function Home() {
       .catch((err) => {
         console.log("deleteInventoryItem> error: " + JSON.stringify(err));
       });
-    /*
-    const params = {
-      id: inventoryItemToDelete.id,
-      name: "",
-      description: "",
-    };
-    
+    */
     const params = {
       id: inventoryItemToDelete.id,
       name: "",
@@ -312,7 +309,7 @@ export default function Home() {
       .catch((err) => {
         //  console.log("deleteInventoryItem> error: " + JSON.stringify(err));
       });
-*/
+
     // Refresh the local inventory items array and update the GUI
     fetchInventoryItems();
 
