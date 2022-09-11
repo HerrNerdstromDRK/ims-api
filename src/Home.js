@@ -92,7 +92,7 @@ export default function Home() {
 
   // Set the document/page title
   useEffect(() => {
-    document.title = "Simple Inventory Management System (useEffect)";
+    document.title = "Simple Inventory Management System";
   }, []);
 
   // Return true if a user is logged in; false otherwise.
@@ -135,7 +135,6 @@ export default function Home() {
 
   /**
    * Use data currently in the inventory item entry fields to create a new inventory item.
-   * @returns N/A
    */
   async function createInventoryItem() {
     console.log(
@@ -159,10 +158,10 @@ export default function Home() {
       createdBy: user.getUsername(),
       createdAt: new Date().toISOString(),
     };
-    console.log(
-      "createInventoryItem> Going to post, restData: " +
-        JSON.stringify(restData)
-    );
+    //    console.log(
+    //    "createInventoryItem> Going to post, restData: " +
+    //    JSON.stringify(restData)
+    //);
 
     await API.post(apiName, apiDirectory, {
       body: restData,
@@ -186,6 +185,9 @@ export default function Home() {
     );
   }
 
+  /**
+   * Search the inventoryItems array for an inventoryItem with the given ID.
+   */
   function localLookupInventoryItem(searchID) {
     const searchInventoryItem = inventoryItems.filter(
       (inventoryItem) => inventoryItem.id === searchID
@@ -203,10 +205,10 @@ export default function Home() {
    * Update an inventory item in the database.
    */
   async function updateInventoryItem() {
-    console.log(
-      "updateInventoryItem> inventoryItemFormData: " +
-        JSON.stringify(inventoryItemFormData)
-    );
+    //    console.log(
+    //      "updateInventoryItem> inventoryItemFormData: " +
+    //        JSON.stringify(inventoryItemFormData)
+    //    );
 
     let oldInventoryItem = localLookupInventoryItem(inventoryItemFormData.id);
 
@@ -279,18 +281,7 @@ export default function Home() {
       );
       return;
     }
-    /*
-    const deleteParams = {
-      id: inventoryItemToDelete.id,
-    };
-    await API.del(apiName, apiDirectory, { body: deleteParams })
-      .then((result) => {
-        console.log("deleteInventoryItem> result: " + JSON.stringify(result));
-      })
-      .catch((err) => {
-        console.log("deleteInventoryItem> error: " + JSON.stringify(err));
-      });
-    */
+
     const params = {
       id: inventoryItemToDelete.id,
       name: "",
